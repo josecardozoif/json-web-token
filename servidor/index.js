@@ -26,14 +26,14 @@ app.use(
     secret: process.env.SECRET,
     algorithms: ["HS256"],
     getToken: req => req.cookies.token
-  }).unless({ path: ["/autenticar", "/logar", "/deslogar", "/cadastrar"] })
+  }).unless({ path: ["/autenticar", "/logar", "/deslogar", "/usuarios/cadastrar"] })
 );
 
 app.get('/autenticar', async function(req, res){
   res.render('autenticar');
 })
 
-app.get('/cadastrar', async function(req, res){
+app.get('/usuarios/cadastrar', async function(req, res){
   res.render('cadastrar');
 })
 
