@@ -19,17 +19,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static('public'));
 
-app.use(cookieParser());
+//algo q o servidor taca no navegador por um tempo, será usado para autenticação
+app.use(cookieParser()); //pegar uma coisa e transformar em outra 
 app.use(
   expressJWT({
     secret: process.env.SECRET,
     algorithms: ["HS256"],
     getToken: req => req.cookies.token
-  }).unless({ path: ["/autenticar", "/logar", "/deslogar", "/"] })
+  }).unless({ path: ["/autenticar", "/logar", "/deslogar", "/cadastrar"] })
 );
 
 app.get('/autenticar', async function(req, res){
   res.render('autenticar');
+})
+
+app.get('/cadastrar', async function(req, res){
+  res.render('cadastrar');
 })
 
 app.get('/', async function(req, res){
@@ -37,11 +42,29 @@ app.get('/', async function(req, res){
 })
 
 app.post('/logar', (req, res) => {
-  res.send("Autenticação efetuada com sucesso!")
+  //if (req.body.usuario == "picolo" && req.body.senha == "123") { continua..
+  const { usuario, senha } = req.body //sinaliza req.body.usuario e req.body.senha
+  if( usuario == "Picolo" && senha == "123"){ //se for igual a isso
+    const id = 1;
+    const token = jwt.sign({ id }, process.env.SECRET, {//jwt = json web token
+      expiresIn: 666 //num em segundos, qnd o token expira
+    })
+    //res.send("Usuário autenticado com sucesso!") //login correto
+    res.cookie('token', token, {httpOnly: true});
+    return res.json({//serve pra ver oq a gente acabou de fazer, informações q  serão passadas pro servs
+      usuario: usuario,
+      token: token
+    })
+  }
+
+  res.status(500).json({mensagem:"Login Inválido"})//se td tiver errado, retorna isso aq
 })
 
 app.post('/deslogar', function(req, res) {
-  
+  res.cookie('token', null, {httpOnly: true});
+  res.json({
+    deslogado: true
+  })
 })
 
 app.listen(3000, function() {
