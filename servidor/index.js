@@ -38,7 +38,17 @@ app.get('/usuarios/cadastrar', async function(req, res){
 })
 
 app.post('/usuarios/cadastrar', async function(req, res){
-  res.render('cadastrar');
+  let {usuario, senha, confirmar} = req.body
+
+  if(senha == confirmar){
+    return res.json({
+      usuario: usuario,
+      senha: senha,
+      confirmar: confirmar
+    })
+  } else {
+    res.status(500).json({mensagem:"Senhas não compatíveis"})
+  }
 })
 
 app.get('/', async function(req, res){
