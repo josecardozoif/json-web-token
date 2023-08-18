@@ -37,6 +37,10 @@ app.get('/usuarios/cadastrar', async function(req, res){
   res.render('cadastrar');
 })
 
+app.post('/usuarios/cadastrar', async function(req, res){
+  res.render('cadastrar');
+})
+
 app.get('/', async function(req, res){
   res.render("home")
 })
