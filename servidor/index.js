@@ -38,17 +38,13 @@ app.get('/usuarios/cadastrar', async function(req, res){
 })
 
 app.post('/usuarios/cadastrar', async function(req, res){
-  let {usuario, senha, confirmar} = req.body
-
-  if(senha == confirmar){
-    return res.json({
-      usuario: usuario,
-      senha: senha,
-      confirmar: confirmar
-    })
-  } else {
-    res.status(500).json({mensagem:"Senhas não compatíveis"})
-  }
+  try {
+    await usuario.create(req.body);
+    res.redirect('/usuarios/cadastrar')
+} catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Ocorreu um erro ao criar o usuário.' });
+}
 })
 
 app.get('/', async function(req, res){
