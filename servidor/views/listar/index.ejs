@@ -11,8 +11,9 @@
   <section class="container grid grid-template-columns-cp">
       <div>
         <ul>
-            <li><% users.forEach((usuario) => { %>
-                <%= usuario.nome %>
+            <% users.forEach((usuario) => { %>
+                <li><%= usuario.usuario%></li>
+                <%})%>
             </li>
         </ul>
         </div>
