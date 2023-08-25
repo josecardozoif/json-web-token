@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap');
 
 body {
-  background-color: rgb(85, 63, 209);
+  background: rgb(168,131,252);
+  background: linear-gradient(90deg, rgba(168,131,252,1) 0%, rgba(71,46,171,1) 35%, rgba(2,0,36,1) 100%);
 }
 
 .grid {
@@ -17,7 +18,7 @@ body {
   border-bottom: #2E177F solid 10px;
   border-radius: 10px;
   width: 600px;
-  height: 500px;
+  height: 510px;
 }
 
 .inpas {
@@ -46,7 +47,9 @@ body {
   color: rgb(85, 63, 209);
   background-color: whitesmoke;
   border: #dad1df solid 1px;
-  border-bottom: #dad1df solid 10px;
+  box-shadow: 3px 3px 1px 1px #dad1df;
+  border-radius: 5px;
+  border-bottom: #dad1df solid 1px;
   font-size: 20px;
   font-family: 'Alegreya Sans SC', sans-serif;
   font-weight: bold;

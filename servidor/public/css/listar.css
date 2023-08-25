@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Khand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap');
+
+body {
+  background: rgb(168,131,252);
+  background: linear-gradient(90deg, rgba(168,131,252,1) 0%, rgba(71,46,171,1) 35%, rgba(2,0,36,1) 100%);
+}

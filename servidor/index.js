@@ -26,7 +26,7 @@ app.use(
     secret: process.env.SECRET,
     algorithms: ["HS256"],
     getToken: req => req.cookies.token
-  }).unless({ path: ["/autenticar", "/logar", "/deslogar", "/usuarios/cadastrar"] })
+  }).unless({ path: ["/", "/autenticar", "/logar", "/deslogar", "/usuarios/cadastrar", "/usuarios/listar"] })
 );
 
 app.get('/autenticar', async function(req, res){
@@ -40,12 +40,18 @@ app.get('/usuarios/cadastrar', async function(req, res){
 app.post('/usuarios/cadastrar', async function(req, res){
   try {
     await usuario.create(req.body);
-    res.redirect('/usuarios/cadastrar')
+    res.redirect('/usuarios/listar')
 } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Ocorreu um erro ao criar o usuário.' });
 }
 })
+
+app.get('/usuarios/listar', async function(req, res){
+let lista = await usuario.findAll()//select do db 
+  res.render('listar', {users: lista});
+})
+
 
 app.get('/', async function(req, res){
   res.render("home")
@@ -66,7 +72,6 @@ app.post('/logar', (req, res) => {
       token: token
     })
   }
-
   res.status(500).json({mensagem:"Login Inválido"})//se td tiver errado, retorna isso aq
 })
 
