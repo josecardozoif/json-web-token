@@ -9,10 +9,11 @@
 </head>
 <body>
   <section class="container grid grid-template-columns-cp">
-      <div>
+      <div class="caixa">
+        <h1 class="titulo">Usuários Cadastrados</h1>
         <ul>
             <% users.forEach((usuario) => { %>
-                <li><%= usuario.usuario%></li>
+                <li class="nomes"><%= usuario.usuario%></li>
                 <%})%>
             </li>
         </ul>
