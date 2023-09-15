@@ -60,7 +60,7 @@ app.get('/', async function(req, res){
 app.post('/logar', (req, res) => {
   //if (req.body.usuario == "picolo" && req.body.senha == "123") { continua..
   const { usuario, senha } = req.body //sinaliza req.body.usuario e req.body.senha
-  if( usuario == "Picolo" && senha == "123"){ //se for igual a isso
+  if( usuario == usuario && senha == senha){ //se for igual a isso
     const id = 1;
     const token = jwt.sign({ id }, process.env.SECRET, {//jwt = json web token
       expiresIn: 666 //num em segundos, qnd o token expira
