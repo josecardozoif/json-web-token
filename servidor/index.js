@@ -9,6 +9,13 @@ var cookieParser = require('cookie-parser')
 const express = require('express');
 const { usuario } = require('./models');
 
+const crypto = require('./crypto');
+
+const encrypted_key = crypto.encrypt("HelloWorld");
+console.log(encrypted_key);
+const decrypted_key = crypto.decrypt(encrypted_key);
+console.log(decrypted_key)
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -39,7 +46,7 @@ app.get('/usuarios/cadastrar', async function(req, res){
 
 app.post('/usuarios/cadastrar', async function(req, res){
   try {
-    await usuario.create(req.body);
+    await usuario.create(req.body);//dados do formulario
     res.redirect('/usuarios/listar')
 } catch (err) {
     console.error(err);
@@ -52,27 +59,27 @@ let lista = await usuario.findAll()//select do db
   res.render('listar', {users: lista});
 })
 
-
 app.get('/', async function(req, res){
   res.render("home")
 })
 
 app.post('/logar', (req, res) => {
   //if (req.body.usuario == "picolo" && req.body.senha == "123") { continua..
-  const { usuario, senha } = req.body //sinaliza req.body.usuario e req.body.senha
-  if( usuario == usuario && senha == senha){ //se for igual a isso
+  //const { usuario, senha } = req.body //sinaliza req.body.usuario e req.body.senha
+  if (req.body.usuario == "Jota" && req.body.senha == "123") { //se for igual a isso
     const id = 1;
     const token = jwt.sign({ id }, process.env.SECRET, {//jwt = json web token
       expiresIn: 666 //num em segundos, qnd o token expira
     })
     //res.send("Usuário autenticado com sucesso!") //login correto
-    res.cookie('token', token, {httpOnly: true});
+    res.cookie("token", token, {httpOnly: true});
     return res.json({//serve pra ver oq a gente acabou de fazer, informações q  serão passadas pro servs
-      usuario: usuario,
+      usuario: req.body.usuario,
       token: token
     })
+  } else {
+    res.status(500).json({mensagem:"Login Inválido"})//se td tiver errado, retorna isso aq
   }
-  res.status(500).json({mensagem:"Login Inválido"})//se td tiver errado, retorna isso aq
 })
 
 app.post('/deslogar', function(req, res) {
