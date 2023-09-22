@@ -11,11 +11,6 @@ const { usuario } = require('./models');
 
 const crypto = require('./crypto');
 
-const encrypted_key = crypto.encrypt("HelloWorld");
-console.log(encrypted_key);
-const decrypted_key = crypto.decrypt(encrypted_key);
-console.log(decrypted_key)
-
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -52,6 +47,19 @@ app.post('/usuarios/cadastrar', async function(req, res){
     console.error(err);
     res.status(500).json({ message: 'Ocorreu um erro ao criar o usuário.' });
 }
+  if(req.body.senha == req.body.confirmar){
+    await usuario.create(req.body);
+    res.redirect('/usuarios/cadastrar')
+    let usercrypto = req.body
+  
+    const encrypted_key = crypto.encrypt(usercrypto.senha);
+    console.log("Senha Criptografada: " + encrypted_key);
+  
+    const decrypted_key = crypto.decrypt(encrypted_key);
+    console.log("Descriptografada: " + decrypted_key)
+  } else {
+    res.status(500).json({mensagem:"As senhas não coincidem!"})
+  }
 })
 
 app.get('/usuarios/listar', async function(req, res){
