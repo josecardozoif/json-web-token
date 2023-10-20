@@ -13,7 +13,7 @@
         <h1 class="titulo">Usuários Cadastrados</h1>
         <ul>
             <% users.forEach((usuario) => { %>
-                <li class="nomes"><%= usuario.usuario%></li>
+                <li class="nomes"><%= usuario.usuario%> | <%= usuario.senha%></li>
                 <%})%>
             </li>
         </ul>

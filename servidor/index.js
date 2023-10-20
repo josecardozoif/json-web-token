@@ -40,23 +40,14 @@ app.get('/usuarios/cadastrar', async function(req, res){
 })
 
 app.post('/usuarios/cadastrar', async function(req, res){
-  try {
-    await usuario.create(req.body);//dados do formulario
-    res.redirect('/usuarios/listar')
-} catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Ocorreu um erro ao criar o usuário.' });
-}
+  
   if(req.body.senha == req.body.confirmar){
-    await usuario.create(req.body);
-    res.redirect('/usuarios/cadastrar')
     let usercrypto = req.body
   
-    const encrypted_key = crypto.encrypt(usercrypto.senha);
-    console.log("Senha Criptografada: " + encrypted_key);
-  
-    const decrypted_key = crypto.decrypt(encrypted_key);
-    console.log("Descriptografada: " + decrypted_key)
+    usercrypto.senha = crypto.encrypt(req.body.senha);
+
+    await usuario.create(usercrypto);
+    res.redirect('/usuarios/listar')
   } else {
     res.status(500).json({mensagem:"As senhas não coincidem!"})
   }

@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Khand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap');
+
+body {
+  background: rgb(168,131,252);
+  background: linear-gradient(90deg, rgba(168,131,252,1) 0%, rgba(71,46,171,1) 35%, rgba(2,0,36,1) 100%);
+}
+
+.grid {
+	display: grid;
+	justify-content: center;
+}
+
+.botas {
+  width: 40%;
+  height: 13%;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 15%;
+  color: rgb(85, 63, 209);
+  background-color: whitesmoke;
+  border: #dad1df solid 1px;
+  box-shadow: 3px 3px 1px 1px #dad1df;
+  border-radius: 5px;
+  border-bottom: #dad1df solid 1px;
+  font-size: 20px;
+  font-family: 'Alegreya Sans SC', sans-serif;
+  font-weight: bold;
+}
