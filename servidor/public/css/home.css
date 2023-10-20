@@ -13,17 +13,25 @@ body {
 
 .botas {
   width: 40%;
-  height: 13%;
+  height: 100px;
   margin-left: 30%;
   margin-right: 30%;
-  margin-top: 15%;
+  margin-top: 20%;
   color: rgb(85, 63, 209);
   background-color: whitesmoke;
   border: #dad1df solid 1px;
   box-shadow: 3px 3px 1px 1px #dad1df;
   border-radius: 5px;
   border-bottom: #dad1df solid 1px;
-  font-size: 20px;
+  font-size: 30px;
   font-family: 'Alegreya Sans SC', sans-serif;
   font-weight: bold;
+}
+
+.botas:hover {
+  background-color: #080416;
+  transition: 1s;
+  box-shadow: 3px 3px 1px 1px rgb(85, 63, 209);
+  border-radius: 5px;
+  border-bottom: #dad1df solid 1px;
 }
