@@ -28,7 +28,7 @@ app.use(
     secret: process.env.SECRET,
     algorithms: ["HS256"],
     getToken: req => req.cookies.token
-  }).unless({ path: ["/", "/autenticar", "/logar", "/deslogar", "/usuarios/cadastrar", "/usuarios/listar"] })
+  }).unless({ path: ["/autenticar", "/logar", "/deslogar", "/usuarios/cadastrar", "/usuarios/listar"] })
 );
 
 app.get('/autenticar', async function(req, res){
@@ -65,23 +65,18 @@ app.get('/', async function(req, res){
 app.post('/logar', async (req, res) => {
   //if (req.body.usuario == "picolo" && req.body.senha == "123") { continua..
   //const { usuario, senha } = req.body //sinaliza req.body.usuario e req.body.senha
-  const cadastro = await usuario.findOne({ where: {usuario: req.body.usuario}})
-  if(!cadastro) return res.status(500).json({ message: "Usuário não cadastrado ou não existe" })
-  
-  const senhaCadastrada = crypto.encrypt(cadastro.senha)
+  const cadastro = await usuario.findOne({ where: {usuario: req.body.usuario, senha: crypto.encrypt(req.body.senha)}})
+
+  if(cadastro){
   const id = cadastro.id;
-    const token = jwt.sign({ id }, process.env.SECRET, {//jwt = json web token
-      expiresIn: 666 //num em segundos, qnd o token expira
-    })
-    //res.send("Usuário autenticado com sucesso!") //login correto
-    res.cookie("token", token, {httpOnly: true});
-    return res.json({//serve pra ver oq a gente acabou de fazer, informações q  serão passadas pro servs
-      usuario: req.body.usuario,
-      token: token
-    })
-  } else {
-    res.status(500).json({mensagem:"Login Inválido"})//se td tiver errado, retorna isso aq
+  const token = jwt.sign({ id }, process.env.SECRET, {//jwt = json web token
+    expiresIn: 666 //num em segundos, qnd o token expira
+  })
+  //res.send("Usuário autenticado com sucesso!") //login correto
+  res.cookie("token", token, {httpOnly: true});
+  return res.redirect("/");
   }
+  res.status(500).json({mensagem:"Login Inválido"})
 })
 
 app.post('/deslogar', function(req, res) {
