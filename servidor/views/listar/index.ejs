@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/listar.css">
-  <title>Cadastrar</title>
+  <title>Cadastrados</title>
 </head>
 <body>
   <section class="container grid grid-template-columns-cp">
@@ -13,7 +13,7 @@
         <h1 class="titulo">Usuários Cadastrados</h1>
         <ul>
             <% users.forEach((usuario) => { %>
-                <li class="nomes"><%= usuario.usuario%> | <%= usuario.senha%></li>
+                <li class="nomes"><%=usuario.id%> | <%= usuario.usuario%> | <%= usuario.senha%></li>
                 <%})%>
             </li>
         </ul>

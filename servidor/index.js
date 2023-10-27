@@ -70,11 +70,11 @@ app.post('/logar', async (req, res) => {
   if(cadastro){
   const id = cadastro.id;
   const token = jwt.sign({ id }, process.env.SECRET, {//jwt = json web token
-    expiresIn: 666 //num em segundos, qnd o token expira
+    expiresIn: 600 //num. em segundos, qnd o token expira
   })
   //res.send("Usuário autenticado com sucesso!") //login correto
   res.cookie("token", token, {httpOnly: true});
-  return res.redirect("/");
+  return res.redirect("/usuarios/listar");
   }
   res.status(500).json({mensagem:"Login Inválido"})
 })
