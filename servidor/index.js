@@ -2,7 +2,13 @@
 require("dotenv-safe").config();
 const jwt = require('jsonwebtoken');
 var { expressjwt: expressJWT } = require("express-jwt");
-const cors = require('cors');
+const cors = require('cors'); //libera coisa no servidor pro cliente acessar, the bridge
+const corsOptions = {
+  origin: "https://localhost:3000", //cliente que fará o acesso
+  methods: "GET, PUT, POST, DELETE", //metodos q o cliente pode executar
+  allowHeaders: "Content-Type, Authorization", //qq o cliente pode usar de conteúdo
+  credentials: true
+}
 
 var cookieParser = require('cookie-parser')
 
@@ -12,10 +18,9 @@ const { usuario } = require('./models');
 const crypto = require('./crypto');
 
 const app = express();
+app.use(cors(corsOptions));
 
 app.set('view engine', 'ejs');
-
-app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
@@ -55,7 +60,7 @@ app.post('/usuarios/cadastrar', async function(req, res){
 
 app.get('/usuarios/listar', async function(req, res){
 let lista = await usuario.findAll()//select do db 
-  res.render('listar', {users: lista});
+  res.json({users: lista});
 })
 
 app.get('/', async function(req, res){
@@ -63,17 +68,18 @@ app.get('/', async function(req, res){
 })
 
 app.post('/logar', async (req, res) => {
-  //if (req.body.usuario == "picolo" && req.body.senha == "123") { continua..
-  //const { usuario, senha } = req.body //sinaliza req.body.usuario e req.body.senha
-  const cadastro = await usuario.findOne({ where: {usuario: req.body.usuario, senha: crypto.encrypt(req.body.senha)}})
+  const userCadastrado = await usuario.findOne({ where: {usuario: req.body.usuario, senha: crypto.encrypt(req.body.senha)}})
 
-  if(cadastro){
-  const id = cadastro.id;
+  if(userCadastrado){
+  const id = userCadastrado.id;
   const token = jwt.sign({ id }, process.env.SECRET, {//jwt = json web token
     expiresIn: 600 //num. em segundos, qnd o token expira
   })
   //res.send("Usuário autenticado com sucesso!") //login correto
-  res.cookie("token", token, {httpOnly: true});
+  res.cookie("token", token, {httpOnly: true}).json({
+    nome: userCadastrado.usuario,//ou .nome
+    token: token
+  });
   return res.redirect("/usuarios/listar");
   }
   res.status(500).json({mensagem:"Login Inválido"})
