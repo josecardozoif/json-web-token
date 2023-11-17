@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap');
+
+.body {
+    background-color: #ffffff;
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+.div {
+    background-color: #1EE1B0;
+    width: 40%;
+    height: 500px;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 10%;
+    border-bottom: solid #17AD87 10px;
+    border-radius: 20px;
+}
+
+.h1 {
+    color: #ffffff;
+    text-align: center;
+    padding-top: 5%;
+    font-size: 35px;
+}
+
+.input1 {
+    width: 70%;
+    padding: 20px 20px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-top: 10%;
+    margin-left: 15%;
+    margin-right: 15%;
+    border-bottom: solid #17AD87 10px;
+    border-radius: 20px;
+}
+
+.input2 {
+    width: 70%;
+    padding: 20px 20px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-top: 5%;
+    margin-left: 15%;
+    margin-right: 15%;
+    border-bottom: solid #17AD87 10px;
+    border-radius: 20px;
+}
+
+.button {
+    width: 70%;
+    background-color: #17AD87;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    margin-left: 15%;
+    margin-right: 15%;
+    cursor: pointer;
+    margin-top: 3%;
+    border: #17AD87 solid 1px;
+    border-bottom: solid #ffffff 10px;
+    border-radius: 20px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 20px;
+}
+
+.button:hover {
+    background-color: #ffffff;
+    color: #17AD87;
+    border: #ffffff solid 1px;
+    border-bottom: solid #17AD87 10px;
+    border-radius: 20px;
+    transition: 1s;
+}
