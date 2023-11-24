@@ -8,7 +8,7 @@ import styles from '../../styles/Login.module.css'
 
 export default function Login() {
   const [user, setUser] = useState({
-    email: '',
+    name: '',
     password: '',
   });
   const { push, refresh } = useRouter();
@@ -32,9 +32,10 @@ export default function Login() {
       <h1 className={styles.h1}>Faça Seu Login</h1>
       <form onSubmit={handlerLogin}>
         <input className={styles.input1}
-          placeholder='E-mail'
-          type="email"
-          onChange={(e) => { setUser({ ...user, email: e.target.value }) }}>
+          placeholder='Nome'
+          name="name"
+          type="text"
+          onChange={(e) => { setUser({ ...user, name: e.target.value }) }}>
         </input>
 
         <input className={styles.input2}

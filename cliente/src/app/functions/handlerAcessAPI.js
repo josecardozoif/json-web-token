@@ -1,8 +1,9 @@
 'use server'
 
-const url = "https://ptacfinal.vercel.app";
+const url = "https://localhost:4000";
+
 const getUserAuthenticated = async (user) => {
-    const responseOfApi = await fetch(url + "/user/authenticated",
+    const responseOfApi = await fetch(url + "/logar",
     { //transcrever pra json. para criar comunicação com servidor
         cache: "no-cache",
         method: "POST",

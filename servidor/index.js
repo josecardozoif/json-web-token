@@ -68,7 +68,7 @@ app.get('/', async function(req, res){
 })
 
 app.post('/logar', async (req, res) => {
-  const userCadastrado = await usuario.findOne({ where: {usuario: req.body.usuario, senha: crypto.encrypt(req.body.senha)}})
+  const userCadastrado = await usuario.findOne({ where: {usuario: req.body.name, senha: crypto.encrypt(req.body.password)}})
 
   if(userCadastrado){
   const id = userCadastrado.id;
@@ -77,12 +77,12 @@ app.post('/logar', async (req, res) => {
   })
   //res.send("Usuário autenticado com sucesso!") //login correto
   res.cookie("token", token, {httpOnly: true}).json({
-    nome: userCadastrado.usuario,//ou .nome
+    name: userCadastrado.usuario,//ou .nome
     token: token
   });
-  return res.redirect("/usuarios/listar");
+  //return res.json(userCadastrado)
   }
-  res.status(500).json({mensagem:"Login Inválido"})
+  //res.status(500).json({mensagem:"Login Inválido"})
 })
 
 app.post('/deslogar', function(req, res) {
@@ -92,6 +92,6 @@ app.post('/deslogar', function(req, res) {
   })
 })
 
-app.listen(3000, function() {
-  console.log('App de Exemplo escutando na porta 3000!')
+app.listen(4000, function() {
+  console.log('App de Exemplo escutando na porta 4000!')
 });
