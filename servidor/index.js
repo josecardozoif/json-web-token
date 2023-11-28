@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 var { expressjwt: expressJWT } = require("express-jwt");
 const cors = require('cors'); //libera coisa no servidor pro cliente acessar, the bridge
 const corsOptions = {
-  origin: "https://localhost:3000", //cliente que fará o acesso
+  origin: "http://localhost:3000", //cliente que fará o acesso
   methods: "GET, PUT, POST, DELETE", //metodos q o cliente pode executar
   allowHeaders: "Content-Type, Authorization", //qq o cliente pode usar de conteúdo
   credentials: true
@@ -68,7 +68,7 @@ app.get('/', async function(req, res){
 })
 
 app.post('/logar', async (req, res) => {
-  const userCadastrado = await usuario.findOne({ where: {usuario: req.body.name, senha: crypto.encrypt(req.body.password)}})
+  const userCadastrado = await usuario.findOne({ where: {usuario: req.body.usuario, senha: crypto.encrypt(req.body.senha)}})
 
   if(userCadastrado){
   const id = userCadastrado.id;
@@ -77,7 +77,7 @@ app.post('/logar', async (req, res) => {
   })
   //res.send("Usuário autenticado com sucesso!") //login correto
   res.cookie("token", token, {httpOnly: true}).json({
-    name: userCadastrado.usuario,//ou .nome
+    usuario: userCadastrado.usuario,//ou .nome
     token: token
   });
   //return res.json(userCadastrado)

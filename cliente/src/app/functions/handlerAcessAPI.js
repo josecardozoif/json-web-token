@@ -1,4 +1,5 @@
 'use server'
+import {cookies} from "next/headers"
 
 const url = "https://localhost:4000";
 
@@ -14,13 +15,17 @@ const getUserAuthenticated = async (user) => {
     return userAuth;
 }
 
-const getUsers = async () => {
+const getUsers = async (user) => {
+    const token = cookies().get('token')?.value;
     try{
-        const responseOfApi = await fetch (url + "/users", {cache:"no-cache"}, {next: { revalidate: 10}})
+        const responseOfApi = await fetch (url + "/usuarios/listar", {cache:"no-cache", headers:{
+            'Content-Type':'Application/json', Cookie: `token=${token}`},
+            body: JSON.stringify(user)
+        }) 
         const users = await responseOfApi.json();
         return users;
     }catch{
         return null;
-}
-}
+}}
+
 export {getUsers, getUserAuthenticated}

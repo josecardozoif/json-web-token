@@ -22,11 +22,6 @@ return (
           type="text"
           required>
         </input>
-        <input className={styles.input2}
-          placeholder='E-mail'
-          type="email"
-          required>
-        </input>
         <input className={styles.input3}
           placeholder='Senha'
           type='password'

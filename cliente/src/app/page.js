@@ -8,8 +8,8 @@ import styles from '../../styles/Login.module.css'
 
 export default function Login() {
   const [user, setUser] = useState({
-    name: '',
-    password: '',
+    usuario: '',
+    senha: '',
   });
   const { push, refresh } = useRouter();
 
@@ -18,9 +18,10 @@ export default function Login() {
     try {
       const userAuth = await handlerAcessUser(user);
       if(userAuth.token === undefined){
-        toast.error("Erro no e-mail ou senha!");
+        toast.error("Erro no nome ou senha!");
       }
       push('/pages/dashboard');
+      localStorage.setItem('nome', userAuth.nome)
     } catch {
       toast.success("Login efetuado com sucesso!");
       refresh();
@@ -33,15 +34,15 @@ export default function Login() {
       <form onSubmit={handlerLogin}>
         <input className={styles.input1}
           placeholder='Nome'
-          name="name"
+          name="usuario"
           type="text"
-          onChange={(e) => { setUser({ ...user, name: e.target.value }) }}>
+          onChange={(e) => { setUser({ ...user, usuario: e.target.value }) }}>
         </input>
 
         <input className={styles.input2}
           placeholder='Senha'
           type='password'
-          onChange={(e) => { setUser({ ...user, password: e.target.value }) }}>
+          onChange={(e) => { setUser({ ...user, senha: e.target.value }) }}>
         </input>
         <button className={styles.button}>Entrar</button>
       </form>
