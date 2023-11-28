@@ -1,13 +1,13 @@
 import styles from '../../../styles/Dashboard.module.css'
 
-export default async function ListUsers({users}) {
+export default async function ListUsers({user}) {
     await new Promise((resolve) => setTimeout(resolve, 5000));
     return (
         <div>
 
-            {users?.map((user, index) =>
+            {user?.map((users, index) =>
                 <p className={styles.names} key={index}>
-                    {user.name}
+                    {users.usuario}
                 </p>
             )}
 

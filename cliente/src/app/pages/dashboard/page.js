@@ -11,7 +11,7 @@ export default async function Dashboard() {
         <div className={styles.div}>
             <Suspense className={styles.suspense} fallback={<p className={styles.loading}>Carregando...</p>}>
                 <h1 className={styles.h1}>Usuários Cadastrados</h1>
-                <ListUsers users={users}/>
+                <ListUsers user={users}/>
                 <div className={styles.routes}>
                     <Link className={styles.link} href='/pages/alter'>Alterar</Link> | 
                     <Link className={styles.link} href='/pages/register'> Cadastre-se</Link>
