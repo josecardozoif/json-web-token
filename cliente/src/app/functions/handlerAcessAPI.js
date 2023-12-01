@@ -17,16 +17,17 @@ const getUserAuthenticated = async (user) => {
 }
 
 const postUser = async (user) => {
+    const token = cookies().get("token")?.value
     try{
         const responseOfApi = await fetch (url + "/usuarios/listar", {
             method: 'POST',
             headers: {"Content-Type": "Application/json",
-            Cookie: `token=${cookies().get('token').value}`},
+            Cookie: `token=${token}`},
             body: JSON.stringify(user)
         });
-        const newSave = await responseOfApi.json();
-        console.log(newSave)
-        return newSave;
+        const userSave = await responseOfApi.json();
+        console.log(userSave)
+        return userSave;
     }catch {
     return null;
     }
@@ -34,13 +35,14 @@ const postUser = async (user) => {
 }
 
 const getUsers = async () => {
+    const token = cookies().get("token")?.value
     try{
         const responseOfApi = await fetch (url + "/usuarios/listar", {
             method: 'GET',
             next: { revalidate: 5 },
             headers: {
                 "Content-Type": "Application/json",
-                Cookie: `token=${cookies().get('token').value}`
+                Cookie: `token=${token}`
             }
         }) 
         const users = await responseOfApi.json();
@@ -50,14 +52,14 @@ const getUsers = async () => {
 }}
 
 const getUser = async () => {
+    const token = cookies().get("token")?.value
     try{
         const responseOfApi = await fetch (url + "/usuarios/listar", {
             method: 'GET',
             next: { revalidate: 5 },
             headers: {
                 "Content-Type": "Application/json",
-                Cookie: `token=${cookies().get('token').value}`
-            }
+                Cookie: `token=${token}`}
         }) 
         const user = await responseOfApi.json();
         return user;
@@ -65,4 +67,4 @@ const getUser = async () => {
         return null;
 }}
 
-export {getUsers, getUser, getUserAuthenticated, postUser}
+export { getUsers, getUser, getUserAuthenticated, postUser };

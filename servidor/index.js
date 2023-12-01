@@ -76,7 +76,7 @@ app.post('/logar', async (req, res) => {
     expiresIn: 600 //num. em segundos, qnd o token expira
   })
   //res.send("Usuário autenticado com sucesso!") //login correto
-  res.cookie("token", token, {httpOnly: true}).json({
+  return res.cookie("token", token, {httpOnly: true}).json({
     usuario: userCadastrado.usuario,//ou .nome
     token: token
   });

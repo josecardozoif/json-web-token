@@ -9,7 +9,7 @@ import { postUser } from "@/app/functions/handlerAcessAPI";
 
 export default function Register(){
 
-const [regist, setRegist] = useState({
+const [user, setUser] = useState({
   usuario: '',
   senha: '',
   confirmar: '',
@@ -19,12 +19,10 @@ const { push } = useRouter();
 const handlerRegister = async (e) => {
   e.preventDefault();
   try {
-    await postUser(regist);
-    toast.success("Cadastro efetuado com sucesso!");
+    await postUser(user);
     push('/pages/dashboard');
-} catch (err) {
-  toast.error("Erro no nome ou senha!");
-  console.log(err);
+} catch {
+    toast.error("Erro no nome ou senha!");
   }
 };
 
@@ -38,21 +36,21 @@ return (
           placeholder='Nome'
           name="nome"
           type="text"
-          onChange={(e) => { setRegist({ ...regist, usuario: e.target.value }) }}
+          onChange={(e) => { setUser({ ...user, usuario: e.target.value }) }}
           required>
         </input>
         <input className={styles.input3}
           placeholder='Senha'
           name="senha"
           type='password'
-          onChange={(e) => { setRegist({ ...regist, senha: e.target.value }) }}
+          onChange={(e) => { setUser({ ...user, senha: e.target.value }) }}
           required>
         </input>
         <input className={styles.input3}
           placeholder='Confirmar senha'
           name="confirmar"
           type='password'
-          onChange={(e) => { setRegist({ ...regist, confirmar: e.target.value }) }}
+          onChange={(e) => { setUser({ ...user, confirmar: e.target.value }) }}
           required>
         </input>
         <button className={styles.button}>Cadastrar</button>
