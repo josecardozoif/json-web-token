@@ -14,15 +14,16 @@ const [user, setUser] = useState({
   senha: '',
   confirmar: '',
 });
-const { push } = useRouter();
+const { push, refresh } = useRouter();
 
 const handlerRegister = async (e) => {
   e.preventDefault();
   try {
     await postUser(user);
-    push('/pages/dashboard');
+    return push('/pages/dashboard');
 } catch {
     toast.error("Erro no nome ou senha!");
+    refresh();
   }
 };
 

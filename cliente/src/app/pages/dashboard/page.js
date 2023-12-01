@@ -12,7 +12,7 @@ export default async function Dashboard() {
             <Suspense className={styles.suspense} fallback={<p className={styles.loading}>Carregando...</p>}>
                 <h1 className={styles.h1}>Usuários Cadastrados</h1>
                 
-                <div>
+                <div className={styles.names}>
                 {callUser.map((users) =>
                 <p className={styles.usuario}> {users.usuario}</p>
                 )}
