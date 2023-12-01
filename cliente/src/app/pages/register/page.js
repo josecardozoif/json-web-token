@@ -1,14 +1,31 @@
 'use client'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Suspense } from "react";
 import styles from '../../../../styles/Register.module.css'
+import { postUser } from "@/app/functions/handlerAcessAPI";
 
 export default function Register(){
 
-const handlerAlt = async (e) => {
-    e.preventDefault();
-      toast.success("Cadastro efetuado com sucesso!");
+const [regist, setRegist] = useState({
+  usuario: '',
+  senha: '',
+});
+const { push, refresh } = useRouter();
+
+const handlerRegister = async (e) => {
+  e.preventDefault();
+  try {
+   await postUser(regist)
+    toast.error("Erro no nome ou senha!");
+    push('/pages/dashboard');
+    localStorage.setItem('nome', userAuth.nome)
+} catch {
+  toast.success("Cadastro efetuado com sucesso!");
+  refresh();
+}
 }
 
 return (
@@ -16,15 +33,19 @@ return (
     <div className={styles.div}>
     <Suspense className={styles.suspense} fallback={<p className={styles.loading}>Carregando...</p>}>
       <h1 className={styles.h1}>Cadastre-se</h1>
-      <form onSubmit={handlerAlt}>
+      <form onSubmit={handlerRegister}>
         <input className={styles.input1}
           placeholder='Nome'
+          name="nome"
           type="text"
+          onChange={(e) => { setRegist({ ...regist, usuario: e.target.value }) }}
           required>
         </input>
         <input className={styles.input3}
           placeholder='Senha'
+          name="senha"
           type='password'
+          onChange={(e) => { setRegist({ ...regist, senha: e.target.value }) }}
           required>
         </input>
         <button className={styles.button}>Cadastrar</button>

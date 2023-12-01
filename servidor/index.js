@@ -60,7 +60,7 @@ app.post('/usuarios/cadastrar', async function(req, res){
 
 app.get('/usuarios/listar', async function(req, res){
 let lista = await usuario.findAll()//select do db 
-  res.json({users: lista});
+  res.json(lista);
 })
 
 app.get('/', async function(req, res){

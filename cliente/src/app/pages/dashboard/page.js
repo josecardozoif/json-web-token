@@ -6,12 +6,13 @@ import Link from 'next/link';
 
 export default async function Dashboard() {
     const users = await getUsers();
+    console.log(users)
     return (
         <body className={styles.body}>
         <div className={styles.div}>
             <Suspense className={styles.suspense} fallback={<p className={styles.loading}>Carregando...</p>}>
                 <h1 className={styles.h1}>Usuários Cadastrados</h1>
-                <ListUsers user={users}/>
+                <ListUsers register={users}/>
                 <div className={styles.routes}>
                     <Link className={styles.link} href='/pages/alter'>Alterar</Link> | 
                     <Link className={styles.link} href='/pages/register'> Cadastre-se</Link>

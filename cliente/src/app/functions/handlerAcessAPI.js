@@ -1,5 +1,5 @@
 'use server'
-import {cookies} from "next/headers"
+import { cookies } from "next/dist/client/components/headers";
 
 const url = "http://localhost:4000";
 
@@ -8,19 +8,40 @@ const getUserAuthenticated = async (user) => {
     { //transcrever pra json. para criar comunicação com servidor
         cache: "no-cache",
         method: "POST",
-        headers: {"Content-Type": "Application/json"},
+        headers: 
+        {"Content-Type": "Application/json"},
         body: JSON.stringify(user)
     });
     let userAuth = await responseOfApi.json();
     return userAuth;
 }
 
-const getUsers = async (user) => {
-    const token = cookies().get('token')?.value;
+const postUser = async (user) => {
     try{
-        const responseOfApi = await fetch (url + "/usuarios/listar", {cache:"no-cache", headers:{
-            'Content-Type':'Application/json', Cookie: `token=${token}`, next: {revalidate:10}},
+        const responseOfApi = await fetch (url + "/usuarios/listar", {
+            method: 'POST',
+            headers: {"Content-Type": "Application/json",
+            Cookie: `token=${cookies().get('token').value}`},
             body: JSON.stringify(user)
+        });
+        const newSave = await responseOfApi.json();
+        console.log(newSave)
+        return newSave;
+    }catch {
+    return null;
+    }
+
+}
+
+const getUsers = async () => {
+    try{
+        const responseOfApi = await fetch (url + "/usuarios/listar", {
+            method: 'GET',
+            next: { revalidate: 5 },
+            headers: {
+                "Content-Type": "Application/json",
+                Cookie: `token=${cookies().get('token').value}`
+            }
         }) 
         const users = await responseOfApi.json();
         return users;
@@ -28,4 +49,20 @@ const getUsers = async (user) => {
         return null;
 }}
 
-export {getUsers, getUserAuthenticated}
+const getUser = async () => {
+    try{
+        const responseOfApi = await fetch (url + "/usuarios/listar", {
+            method: 'GET',
+            next: { revalidate: 5 },
+            headers: {
+                "Content-Type": "Application/json",
+                Cookie: `token=${cookies().get('token').value}`
+            }
+        }) 
+        const user = await responseOfApi.json();
+        return user;
+    }catch{
+        return null;
+}}
+
+export {getUsers, getUser, getUserAuthenticated, postUser}

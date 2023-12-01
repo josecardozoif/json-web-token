@@ -1,13 +1,13 @@
 import styles from '../../../styles/Dashboard.module.css'
 
-export default async function ListUsers({user}) {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+export default async function ListUsers({register}) {
+    await new Promise((resolve) => setTimeout(resolve, 500));
     return (
         <div>
 
-            {user?.map((users, index) =>
-                <p className={styles.names} key={index}>
-                    {users.usuario}
+            {register.map(dbUser =>
+                <p className={styles.names} key={dbUser.usuario}>
+                    {dbUser.usuario}
                 </p>
             )}
 
