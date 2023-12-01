@@ -12,21 +12,21 @@ export default function Register(){
 const [regist, setRegist] = useState({
   usuario: '',
   senha: '',
+  confirmar: '',
 });
-const { push, refresh } = useRouter();
+const { push } = useRouter();
 
 const handlerRegister = async (e) => {
   e.preventDefault();
   try {
-   await postUser(regist)
-    toast.error("Erro no nome ou senha!");
+    await postUser(regist);
+    toast.success("Cadastro efetuado com sucesso!");
     push('/pages/dashboard');
-    localStorage.setItem('nome', userAuth.nome)
-} catch {
-  toast.success("Cadastro efetuado com sucesso!");
-  refresh();
-}
-}
+} catch (err) {
+  toast.error("Erro no nome ou senha!");
+  console.log(err);
+  }
+};
 
 return (
   <body className={styles.body}>
@@ -46,6 +46,13 @@ return (
           name="senha"
           type='password'
           onChange={(e) => { setRegist({ ...regist, senha: e.target.value }) }}
+          required>
+        </input>
+        <input className={styles.input3}
+          placeholder='Confirmar senha'
+          name="confirmar"
+          type='password'
+          onChange={(e) => { setRegist({ ...regist, confirmar: e.target.value }) }}
           required>
         </input>
         <button className={styles.button}>Cadastrar</button>
