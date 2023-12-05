@@ -19,7 +19,6 @@ export default async function Dashboard() {
                 </div>
 
                 <div className={styles.routes}>
-                    <Link className={styles.link} href='/pages/alter'>Alterar</Link> | 
                     <Link className={styles.link} href='/pages/register'> Cadastre-se</Link>
                 </div>
             </Suspense>

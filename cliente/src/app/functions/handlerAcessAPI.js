@@ -30,7 +30,6 @@ const postUser = async (user) => {
     }catch {
     return null;
     }
-
 }
 
 const getUsers = async () => {
